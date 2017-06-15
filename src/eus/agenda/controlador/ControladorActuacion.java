@@ -1,5 +1,7 @@
 package eus.agenda.controlador;
 
+import java.sql.PreparedStatement;
+
 import eus.agenda.modelo.*;
 
 public class ControladorActuacion {
@@ -12,4 +14,14 @@ public class ControladorActuacion {
 
 	}
 
+	public void modificarPrecio(int idFiesta, int idGrupo, int nuevoPrecio) throws Exception {
+		
+		try {
+			modeloActua.modificarPrecio(idFiesta, idGrupo, nuevoPrecio);
+		} catch (Exception e) {
+			throw e;
+		}
+		
+	}
+	
 }

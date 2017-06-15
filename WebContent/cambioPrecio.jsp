@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Consultar agenda</title>
+<title>Cambio Precio</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -18,38 +18,61 @@
 	crossorigin="anonymous">
 </head>
 <body>
+	<%@ page import="eus.agenda.modelo.*"%>
+	<%@ page import="eus.agenda.controlador.*"%>
+	<%@ page import="java.util.ArrayList"%>
+
+	<%
+		ControladorFiesta controladorFiesta = new ControladorFiesta();
+		ControladorGrupo controladorGrupo = new ControladorGrupo();
+
+		ArrayList<Fiesta> fiestas = new ArrayList<Fiesta>();
+		fiestas = controladorFiesta.seleccionarTodos();
+
+		ArrayList<Grupo> grupos = new ArrayList<Grupo>();
+		grupos = controladorGrupo.seleccionarTodos();
+	%>
+
 	<div class="container">
-		<form action="">
+		<form action="precioCambiado.jsp">
 			<div class="row">
 				<div class="col-md-6">
 					<!-- Combo de pueblos -->
 					<br>
 					<p class="bg-primary">Seleccionar pueblo</p>
 					<select name="pueblo" class="form-control">
-						<option value="1">Durango - San Fausto</option>
-						<option value="2">Gernika - Andra Mari</option>
-						<option value="3">Bilbo - Aste Nagusia</option>
+						<%
+							for (Fiesta fies : fiestas) {
+						%>
+						<option value="<%=fies.getId()%>"><%=fies.getPueblo()%> -
+							<%=fies.getNombre()%></option>
+						<%
+							}
+						%>
 					</select>
 				</div>
 				<div class="col-md-6">
-				<br>
-				<p class="bg-primary">Seleccionar grupo</p>
+					<br>
+					<p class="bg-primary">Seleccionar grupo</p>
 					<!-- combo de grupos -->
 					<select name="grupo" class="form-control">
-						<option value="1">Berri Txarrak</option>
-						<option value="2">Gatibu</option>
-						<option value="3">Su Ta Gar</option>
+						<%
+							for (Grupo gru : grupos) {
+						%>
+						<option value="<%=gru.getId()%>"><%=gru.getNombre()%></option>
+						<%
+							}
+						%>
 					</select>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-4 col-md-offset-4">
 					<!-- input de precio nuevo -->
-						<h3>Introduce el precio nuevo:</h3>
-						<br>
-						<input type="text" name="precio" class="form-control"/>
-						<br>
-						<input type="submit" class="btn btn-default" name="cambiar"	value="cambiar" />
+					<h3>Introduce el precio nuevo:</h3>
+					<br> <input type="text" name="precio" class="form-control" />
+					<br> <input type="submit" class="btn btn-default"
+						name="cambiar" value="cambiar" />
 				</div>
 		</form>
 	</div>

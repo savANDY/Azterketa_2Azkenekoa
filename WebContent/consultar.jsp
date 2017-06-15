@@ -18,6 +18,24 @@
 	crossorigin="anonymous">
 </head>
 <body>
+
+	<%@ page import="eus.agenda.modelo.*"%>
+	<%@ page import="eus.agenda.controlador.*"%>
+
+	<%
+	
+		ControladorFiesta controladorFiesta = new ControladorFiesta();
+
+		String pueblo = request.getParameter("pueblo");
+		boolean comprobarExiste = false;
+		if (pueblo != null) {
+
+			comprobarExiste = controladorFiesta.comprobarFiesta(pueblo);
+
+		}
+	%>
+
+
 	<div class="container">
 
 		<div class="row">
@@ -25,17 +43,22 @@
 				<!-- formualrio para introducir el pueblo -->
 				<br>
 				<div class="jumbotron">
-					<form action="">
+					<form action="consultar.jsp">
 						<h3>Introduce el nombre del pueblo:</h3>
-						<br>
-						<input type="text" name="pueblo" class="form-control"/>
-						<br>
-						<input type="submit" class="btn btn-default" name="consultar"	value="consultar" />
-						
+						<br> <input type="text" name="pueblo" class="form-control" />
+						<br> <input type="submit" class="btn btn-default"
+							name="consultar" value="consultar" />
+
 					</form>
 				</div>
 			</div>
 		</div>
+
+		<%
+			if (comprobarExiste) {
+				Fiesta fiesta = new Fiesta();
+				fiesta = controladorFiesta.seleccionarPorPueblo(pueblo);
+		%>
 
 		<div class="row">
 
@@ -45,15 +68,15 @@
 				<table class="table">
 					<tr>
 						<th>Pueblo</th>
-						<td>Durango</td>
+						<td><%=fiesta.getPueblo()%></td>
 					</tr>
 					<tr>
 						<th>Nombre de fiestas</th>
-						<td>San Fausto</td>
+						<td><%=fiesta.getNombre()%></td>
 					</tr>
 					<tr>
 						<th>Mes</th>
-						<td>10</td>
+						<td><%=fiesta.getMes()%></td>
 					</tr>
 				</table>
 
@@ -82,6 +105,10 @@
 			</div>
 
 		</div>
+
+		<%
+			}
+		%>
 
 	</div>
 </body>
